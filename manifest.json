@@ -3,7 +3,10 @@
     "name": "Chat Navigator",
     "version": "1.0",
     "description": "Quickly navigate long ChatGPT conversations",
-    "permissions": ["activeTab", "storage"],
+    "permissions": [
+        "activeTab",
+        "storage"
+    ],
     "host_permissions": [
         "https://chatgpt.com/*"
     ],
@@ -19,5 +22,13 @@
                 "content.js"
             ]
         }
-    ]
+    ],
+    "commands": {
+        "_execute_action": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+L",
+                "mac": "Command+Shift+L"
+            }
+        }
+    }
 }
