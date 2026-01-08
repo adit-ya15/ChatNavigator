@@ -1,0 +1,25 @@
+{
+    "manifest_version": 3,
+    "name": "Chat Navigator",
+    "version": "1.0",
+    "description": "Quickly navigate long ChatGPT conversations",
+    "permissions": [
+        "activeTab"
+    ],
+    "host_permissions": [
+        "https://chatgpt.com/*"
+    ],
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://chatgpt.com/*"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ]
+}
