@@ -16,10 +16,24 @@
     "content_scripts": [
         {
             "matches": [
-                "https://chatgpt.com/*"
+                "https://chatgpt.com/*",
+                "https://gemini.google.com/*",
+                "https://claude.ai/*"
             ],
             "js": [
-                "content.js"
+                "loader.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "content.js",
+                "adapterRegistry.js",
+                "adapters/*.js"
+            ],
+            "matches": [
+                "<all_urls>"
             ]
         }
     ],
