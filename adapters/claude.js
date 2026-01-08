@@ -44,7 +44,6 @@ export const claudeAdapter = {
 
     observeChanges(cb) {
         const observer = new MutationObserver(cb);
-        // Claude is React-based, fairly standard
         observer.observe(document.body, { childList: true, subtree: true });
     }
 };

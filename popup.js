@@ -82,7 +82,7 @@ function render(messages) {
         const star = document.createElement("span");
         star.textContent = "★";
         star.className = "star" + (bookmarked.has(msg.id) ? " active" : "");
-        star.title = "Bookmark this question";
+        star.setAttribute("aria-label", "Bookmark this question");
 
         star.onclick = (e) => {
             e.stopPropagation();

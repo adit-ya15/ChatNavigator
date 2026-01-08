@@ -104,8 +104,7 @@
             list-style: none;
             padding: 0;
             margin: 0;
-            max-height: 350px;
-            overflow-y: auto;
+            /* Allow body to scroll instead of ul, preventing tooltip clipping */
         }
 
         li {
@@ -131,10 +130,41 @@
             font-size: 14px;
             line-height: 1;
             user-select: none;
+            position: relative;
         }
 
         .star.active {
             color: #f59e0b;
+        }
+        
+        /* Custom Subtle Tooltip */
+        .star:hover::after {
+            content: attr(aria-label);
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            transform: translateY(-50%);
+            margin-left: 8px;
+            padding: 4px 8px;
+            background: #1f2937;
+            color: white;
+            font-size: 11px;
+            border-radius: 4px;
+            white-space: nowrap;
+            opacity: 0;
+            animation: fadeIn 0.2s forwards;
+            pointer-events: none;
+            z-index: 999;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        body.dark .star:hover::after {
+            background: #f3f4f6;
+            color: #1f2937;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
         }
 
         .text {
