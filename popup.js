@@ -7,6 +7,30 @@ let chatKey = null;
 const list = document.getElementById("list");
 const searchInput = document.getElementById("search");
 const bookmarkToggle = document.getElementById("bookmarkToggle");
+const themeToggle = document.getElementById("themeToggle");
+
+/* ---------- Theme Logic ---------- */
+function initTheme() {
+    chrome.storage.local.get("theme", (data) => {
+        if (data.theme === "dark") {
+            document.body.classList.add("dark");
+        } else if (data.theme === "light") {
+            document.body.classList.remove("dark");
+        } else {
+            // Auto detect
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.body.classList.add("dark");
+            }
+        }
+    });
+}
+
+initTheme();
+
+themeToggle.onclick = () => {
+    const isDark = document.body.classList.toggle("dark");
+    chrome.storage.local.set({ theme: isDark ? "dark" : "light" });
+};
 
 /* ---------- Helpers ---------- */
 
@@ -32,13 +56,22 @@ function loadBookmarks(chatKey, callback) {
 
 /* ---------- Rendering ---------- */
 
+/* ---------- Rendering ---------- */
+
 function render(messages) {
     list.innerHTML = "";
 
     if (!messages.length) {
         const div = document.createElement("div");
         div.className = "empty";
-        div.textContent = "No questions";
+        // Customize empty message
+        if (showOnlyBookmarks) {
+            div.textContent = "No bookmarks yet";
+        } else if (searchInput.value.trim()) {
+            div.textContent = "No questions found";
+        } else {
+            div.textContent = "No questions found";
+        }
         list.appendChild(div);
         return;
     }
@@ -49,6 +82,7 @@ function render(messages) {
         const star = document.createElement("span");
         star.textContent = "★";
         star.className = "star" + (bookmarked.has(msg.id) ? " active" : "");
+        star.title = "Bookmark this question";
 
         star.onclick = (e) => {
             e.stopPropagation();
@@ -99,9 +133,23 @@ function renderFiltered() {
 /* ---------- Init ---------- */
 
 let tabId = null;
+const headerTitle = document.getElementById("headerTitle");
+
+function updateHeader(url) {
+    let platform = "Chat Navigator";
+    if (url.includes("chatgpt.com")) platform = "ChatGPT";
+    else if (url.includes("claude.ai")) platform = "Claude";
+    else if (url.includes("gemini.google.com")) platform = "Gemini";
+    else if (url.includes("meta.ai")) platform = "Meta AI";
+    else if (url.includes("x.com") || url.includes("grok")) platform = "Grok";
+
+    headerTitle.textContent = platform;
+}
 
 chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
+    if (!tab) return;
     tabId = tab.id;
+    updateHeader(tab.url);
     chatKey = getChatKey(tab);
 
     // ALWAYS load bookmarks for current chat
