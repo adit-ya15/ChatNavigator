@@ -1,10 +1,36 @@
 let allMessages = [];
 let bookmarked = new Set();
 let showOnlyBookmarks = false;
+let chatKey = null;
+
 
 const list = document.getElementById("list");
 const searchInput = document.getElementById("search");
 const bookmarkToggle = document.getElementById("bookmarkToggle");
+
+/* ---------- Helpers ---------- */
+
+function getChatKey(tab) {
+    const url = new URL(tab.url);
+    return url.pathname; // per-chat key
+}
+
+function saveBookmarks() {
+    chrome.storage.local.set({
+        [chatKey]: Array.from(bookmarked)
+    });
+}
+
+
+function loadBookmarks(chatKey, callback) {
+    chrome.storage.local.get(chatKey, (data) => {
+        bookmarked = new Set(data[chatKey] || []);
+        callback();
+    });
+}
+
+
+/* ---------- Rendering ---------- */
 
 function render(messages) {
     list.innerHTML = "";
@@ -25,12 +51,15 @@ function render(messages) {
         star.className = "star" + (bookmarked.has(msg.id) ? " active" : "");
 
         star.onclick = (e) => {
-            e.stopPropagation(); // 👈 don't trigger scroll
+            e.stopPropagation();
+
             if (bookmarked.has(msg.id)) {
                 bookmarked.delete(msg.id);
             } else {
                 bookmarked.add(msg.id);
             }
+
+            saveBookmarks();
             renderFiltered();
         };
 
@@ -42,13 +71,11 @@ function render(messages) {
         li.appendChild(text);
 
         li.onclick = () => {
-            chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
-                chrome.tabs.sendMessage(tab.id, {
-                    type: "SCROLL_TO",
-                    id: msg.id
-                });
-                window.close(); // ✅ auto-hide popup
+            chrome.tabs.sendMessage(tabId, {
+                type: "SCROLL_TO",
+                id: msg.id
             });
+            window.close();
         };
 
         list.appendChild(li);
@@ -69,18 +96,27 @@ function renderFiltered() {
     render(filtered);
 }
 
-// Fetch messages
+/* ---------- Init ---------- */
+
+let tabId = null;
+
 chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
-    chrome.tabs.sendMessage(tab.id, { type: "GET_MESSAGES" }, (messages) => {
-        allMessages = messages || [];
-        renderFiltered();
+    tabId = tab.id;
+    chatKey = getChatKey(tab);
+
+    // ALWAYS load bookmarks for current chat
+    loadBookmarks(chatKey, () => {
+        chrome.tabs.sendMessage(tab.id, { type: "GET_MESSAGES" }, (messages) => {
+            allMessages = messages || [];
+            renderFiltered();
+        });
     });
 });
 
-// Search
+/* ---------- Events ---------- */
+
 searchInput.addEventListener("input", renderFiltered);
 
-// Bookmark filter toggle
 bookmarkToggle.onclick = () => {
     showOnlyBookmarks = !showOnlyBookmarks;
     bookmarkToggle.classList.toggle("active", showOnlyBookmarks);

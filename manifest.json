@@ -3,9 +3,7 @@
     "name": "Chat Navigator",
     "version": "1.0",
     "description": "Quickly navigate long ChatGPT conversations",
-    "permissions": [
-        "activeTab"
-    ],
+    "permissions": ["activeTab", "storage"],
     "host_permissions": [
         "https://chatgpt.com/*"
     ],

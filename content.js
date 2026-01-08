@@ -1,21 +1,17 @@
 console.log("✅ Chat Navigator content.js loaded");
 
 let cachedMessages = [];
-let idCounter = 0;
-const nodeToId = new WeakMap(); // 🔒 stable mapping
 
 function collectUserMessages() {
     const nodes = document.querySelectorAll(
         '[data-message-author-role="user"]'
     );
 
-    cachedMessages = Array.from(nodes).map((node) => {
-        // ✅ assign ONCE per node
-        if (!nodeToId.has(node)) {
-            nodeToId.set(node, `chat-nav-${++idCounter}`);
-        }
-
-        const id = nodeToId.get(node);
+    // Convert to array to use index
+    cachedMessages = Array.from(nodes).map((node, index) => {
+        // ✅ Stable ID based on index
+        // This works because the order of messages in a chat is deterministic
+        const id = `chat-nav-idx-${index}`;
 
         node.dataset.chatNavId = id;
 
