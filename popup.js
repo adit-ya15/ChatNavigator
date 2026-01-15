@@ -34,6 +34,12 @@ themeToggle.onclick = () => {
 
 /* ---------- Helpers ---------- */
 
+const BATCH_SIZE = 50;
+let currentFilteredMessages = [];
+let visibleLimit = BATCH_SIZE;
+
+/* ---------- Helpers ---------- */
+
 function getChatKey(tab) {
     const url = new URL(tab.url);
     return url.pathname; // per-chat key
@@ -53,15 +59,23 @@ function loadBookmarks(chatKey, callback) {
     });
 }
 
+function debounce(func, wait) {
+    let timeout;
+    return function (...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+}
+
 
 /* ---------- Rendering ---------- */
 
-/* ---------- Rendering ---------- */
+function render(messages, append = false) {
+    if (!append) {
+        list.innerHTML = "";
+    }
 
-function render(messages) {
-    list.innerHTML = "";
-
-    if (!messages.length) {
+    if (!messages.length && !append) {
         const div = document.createElement("div");
         div.className = "empty";
         // Customize empty message
@@ -75,6 +89,8 @@ function render(messages) {
         list.appendChild(div);
         return;
     }
+
+    const fragment = document.createDocumentFragment();
 
     messages.forEach((msg) => {
         const li = document.createElement("li");
@@ -94,7 +110,12 @@ function render(messages) {
             }
 
             saveBookmarks();
-            renderFiltered();
+            // Don't re-render entire list to avoid losing scroll position, just toggle class
+            star.className = "star" + (bookmarked.has(msg.id) ? " active" : "");
+            // But if we are in bookmarked only mode, we might need to remove it
+            if(showOnlyBookmarks) {
+                 renderFiltered();
+            }
         };
 
         const text = document.createElement("div");
@@ -112,23 +133,41 @@ function render(messages) {
             window.close();
         };
 
-        list.appendChild(li);
+        fragment.appendChild(li);
     });
+    
+    list.appendChild(fragment);
 }
 
 function renderFiltered() {
     const query = searchInput.value.toLowerCase();
 
-    let filtered = allMessages.filter((m) =>
+    currentFilteredMessages = allMessages.filter((m) =>
         m.text.toLowerCase().includes(query)
     );
 
     if (showOnlyBookmarks) {
-        filtered = filtered.filter((m) => bookmarked.has(m.id));
+        currentFilteredMessages = currentFilteredMessages.filter((m) => bookmarked.has(m.id));
     }
-
-    render(filtered);
+    
+    visibleLimit = BATCH_SIZE;
+    render(currentFilteredMessages.slice(0, visibleLimit));
 }
+
+function loadMore() {
+    if (visibleLimit >= currentFilteredMessages.length) return;
+    
+    const nextBatch = currentFilteredMessages.slice(visibleLimit, visibleLimit + BATCH_SIZE);
+    visibleLimit += BATCH_SIZE;
+    render(nextBatch, true);
+}
+
+// Infinite scroll listener
+window.addEventListener('scroll', () => {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
+        loadMore();
+    }
+});
 
 /* ---------- Init ---------- */
 
@@ -163,7 +202,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
 
 /* ---------- Events ---------- */
 
-searchInput.addEventListener("input", renderFiltered);
+searchInput.addEventListener("input", debounce(renderFiltered, 300));
 
 bookmarkToggle.onclick = () => {
     showOnlyBookmarks = !showOnlyBookmarks;
