@@ -4,7 +4,7 @@
   # Chat Navigator
   **Navigate Infinite Conversations with Ease**
 
-  [![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-Available_Soon-blue?style=for-the-badge&logo=google-chrome)](https://chrome.google.com/webstore)
+  [![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-Available_Soon-blue?style=for-the-badge&logo=google-chrome)](#)
   [![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
   [![Version](https://img.shields.io/badge/Version-1.0-orange.svg?style=for-the-badge)](manifest.json)
 
