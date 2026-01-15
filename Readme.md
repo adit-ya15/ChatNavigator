@@ -27,7 +27,7 @@ Chat Navigator solves this by creating an instant, searchable table of contents 
 <a id="features"></a>
 ## ✨ Key Features
 
-- **⚡ Instant Navigation**: Automatically generates a clickable list of all your prompts and AI responses.
+- **⚡ Instant Navigation**: Automatically generates a clickable list of all your prompts.
 - **🔍 Smart Search**: Real-time filtering allows you to find specific keywords or topics instantly.
 - **⭐ Bookmarks**: Pin important messages or code snippets for quick access later.
 - **🚀 Optimized Performance**: Built with infinite scrolling and debouncing to handle chats with thousands of messages without lag.
@@ -45,6 +45,8 @@ Chat Navigator currently supports:
 | **Gemini** (Google) | ✅ |
 | **Meta AI** | 🚧 (Coming Soon) |
 | **Grok** (X/Twitter) | 🚧 (Coming Soon) |
+
+Only listed platforms are officially supported.
 
 <a id="installation"></a>
 ## 📦 Installation
