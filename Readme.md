@@ -24,6 +24,7 @@
 
 Chat Navigator solves this by creating an instant, searchable table of contents for your chat history. Whether you're coding, writing, or researching, jump to any message instantly and keep your workflow flowing.
 
+<a id="features"></a>
 ## ✨ Key Features
 
 - **⚡ Instant Navigation**: Automatically generates a clickable list of all your prompts and AI responses.
@@ -45,6 +46,7 @@ Chat Navigator currently supports:
 | **Meta AI** | 🚧 (Coming Soon) |
 | **Grok** (X/Twitter) | 🚧 (Coming Soon) |
 
+<a id="installation"></a>
 ## 📦 Installation
 
 ### From Chrome Web Store
@@ -61,6 +63,7 @@ Chat Navigator currently supports:
 5.  Select the `Chat-Navigator` directory you just cloned.
 6.  Pin the extension to your toolbar for easy access!
 
+<a id="how-it-works"></a>
 ## 🛠️ How It Works
 
 1.  Open any supported AI chat (e.g., chatgpt.com).
@@ -70,6 +73,7 @@ Chat Navigator currently supports:
 5.  **Star** items to save them to your bookmarks list.
 6.  **Search** to filter the list instantly.
 
+<a id="privacy"></a>
 ## 🔒 Privacy Policy
 
 We believe in privacy by design.
