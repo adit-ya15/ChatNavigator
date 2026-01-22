@@ -1,7 +1,7 @@
 <div align="center">
   <img src="icon.png" alt="Chat Navigator Logo" width="120" height="120">
   
-  # Chat Navigator
+  # AI Chat Navigator
   **Navigate Infinite Conversations with Ease**
 
   [![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-Available_Soon-blue?style=for-the-badge&logo=google-chrome)](#)
