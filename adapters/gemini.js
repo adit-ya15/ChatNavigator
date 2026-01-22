@@ -10,7 +10,7 @@ export const geminiAdapter = {
         // This selector is a best-guess based on current knowledge.
         // It might need to be updated.
         // Potential selectors: .user-query-container, .query-text, etc.
-        
+
         // This specific attribute has been seen in some versions:
         const selectors = [
             '.user-query',
@@ -46,15 +46,49 @@ export const geminiAdapter = {
     },
 
     scrollToMessage(id) {
-        const el = document.querySelector(`[data-chat-nav-id="${id}"]`);
+        let el = document.querySelector(`[data-chat-nav-id="${id}"]`);
+
+        if (!el) {
+            const indexMatch = id.match(/chat-nav-idx-(\d+)/);
+            if (indexMatch) {
+                const index = parseInt(indexMatch[1], 10);
+                // Re-run selector logic from getMessages
+                const selectors = [
+                    '.user-query',
+                    'div[data-test-id="user-query"]',
+                    '.query-text'
+                ];
+                let nodes = [];
+                for (const sel of selectors) {
+                    const found = document.querySelectorAll(sel);
+                    if (found.length > 0) {
+                        nodes = [...found];
+                        break;
+                    }
+                }
+
+                if (nodes[index]) {
+                    el = nodes[index];
+                    el.dataset.chatNavId = id;
+                }
+            }
+        }
+
         if (el) {
             el.scrollIntoView({ behavior: "smooth", block: "center" });
             // Highlight effect
-            const originalBorder = el.style.border;
-            el.style.border = "2px solid #6366f1";
+            const originalIsTransition = el.style.transition;
+            const originalBoxShadow = el.style.boxShadow;
+
+            el.style.transition = "box-shadow 0.3s ease-in-out";
+            el.style.boxShadow = "0 0 0 4px rgba(99, 102, 241, 0.5)"; // Indigo ring
+
             setTimeout(() => {
-                el.style.border = originalBorder;
-            }, 1000);
+                el.style.boxShadow = originalBoxShadow;
+                setTimeout(() => {
+                    el.style.transition = originalIsTransition;
+                }, 300);
+            }, 2000);
         }
     },
 
