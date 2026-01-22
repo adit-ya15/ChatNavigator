@@ -20,9 +20,9 @@
 
 ## 🚀 Overview
 
-**Chat Navigator** is the ultimate productivity tool for power users of AI chatbots. When conversations get long, finding that one specific prompt or code snippet becomes a nightmare of scrolling. 
+**AI Chat Navigator** is the ultimate productivity tool for power users of AI chatbots. When conversations get long, finding that one specific prompt or code snippet becomes a nightmare of scrolling. 
 
-Chat Navigator solves this by creating an instant, searchable table of contents for your chat history. Whether you're coding, writing, or researching, jump to any message instantly and keep your workflow flowing.
+AI Chat Navigator solves this by creating an instant, searchable table of contents for your chat history. Whether you're coding, writing, or researching, jump to any message instantly and keep your workflow flowing.
 
 <a id="features"></a>
 ## ✨ Key Features
@@ -36,7 +36,7 @@ Chat Navigator solves this by creating an instant, searchable table of contents 
 
 ## 🌐 Supported Platforms
 
-Chat Navigator currently supports:
+AI Chat Navigator currently supports:
 
 | Platform | Status |
 |----------|:------:|
@@ -69,7 +69,7 @@ Only listed platforms are officially supported.
 ## 🛠️ How It Works
 
 1.  Open any supported AI chat (e.g., chatgpt.com).
-2.  Click the **Chat Navigator icon** in your browser toolbar or use the shortcut `Ctrl+Shift+L` (Cmd+Shift+L on Mac).
+2.  Click the **AI Chat Navigator icon** in your browser toolbar or use the shortcut `Ctrl+Shift+L` (Cmd+Shift+L on Mac).
 3.  A popup will appear listing all messages in the current conversion.
 4.  **Click** items to scroll to them.
 5.  **Star** items to save them to your bookmarks list.
