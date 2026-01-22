@@ -2,18 +2,28 @@
     "manifest_version": 3,
     "name": "AI Chat Navigator",
     "version": "1.0.0",
-    "description": "Quickly navigate long AI Chat conversations",
+    "description": "Navigate long AI conversations with search and bookmarks for ChatGPT, Claude, and Gemini",
     "permissions": [
         "activeTab",
         "storage"
     ],
     "host_permissions": [
-        "https://chatgpt.co m/*",
+        "https://chatgpt.com/*",
         "https://gemini.google.com/*",
         "https://claude.ai/*"
     ],
+    "icons": {
+        "16": "icon.png",
+        "48": "icon.png",
+        "128": "icon.png"
+    },
     "action": {
-        "default_popup": "popup.html"
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "icon.png",
+            "48": "icon.png",
+            "128": "icon.png"
+        }
     },
     "content_scripts": [
         {
@@ -47,41 +57,4 @@
             }
         }
     }
-}
-],
-"action": {
-"default_popup": "popup.html"
-},
-"content_scripts": [
-{
-    "matches": [
-        "https://chatgpt.com/*",
-        "https://gemini.google.com/*",
-        "https://claude.ai/*"
-    ],
-    "js": [
-        "loader.js"
-    ]
-}
-],
-"web_accessible_resources": [
-{
-    "resources": [
-        "content.js",
-        "adapterRegistry.js",
-        "adapters/*.js"
-    ],
-    "matches": [
-        "<all_urls>"
-    ]
-}
-],
-"commands": {
-"_execute_action": {
-    "suggested_key": {
-        "default": "Ctrl+Shift+L",
-        "mac": "Command+Shift+L"
-    }
-}
-}
 }
