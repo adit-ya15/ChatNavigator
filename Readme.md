@@ -6,7 +6,7 @@
 
   [![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-Available_Soon-blue?style=for-the-badge&logo=google-chrome)](#)
   [![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
-  [![Version](https://img.shields.io/badge/Version-1.0-orange.svg?style=for-the-badge)](manifest.json)
+  [![Version](https://img.shields.io/badge/Version-1.0.0-orange.svg?style=for-the-badge)](manifest.json)
 
   <p align="center">
     <a href="#features">Features</a> •
