@@ -1,14 +1,16 @@
 {
     "manifest_version": 3,
-    "name": "Chat Navigator",
-    "version": "1.0",
-    "description": "Quickly navigate long ChatGPT conversations",
+    "name": "AI Chat Navigator",
+    "version": "1.0.0",
+    "description": "Quickly navigate long AI Chat conversations",
     "permissions": [
         "activeTab",
         "storage"
     ],
     "host_permissions": [
-        "https://chatgpt.com/*"
+        "https://chatgpt.co m/*",
+        "https://gemini.google.com/*",
+        "https://claude.ai/*"
     ],
     "action": {
         "default_popup": "popup.html"
@@ -45,4 +47,41 @@
             }
         }
     }
+}
+],
+"action": {
+"default_popup": "popup.html"
+},
+"content_scripts": [
+{
+    "matches": [
+        "https://chatgpt.com/*",
+        "https://gemini.google.com/*",
+        "https://claude.ai/*"
+    ],
+    "js": [
+        "loader.js"
+    ]
+}
+],
+"web_accessible_resources": [
+{
+    "resources": [
+        "content.js",
+        "adapterRegistry.js",
+        "adapters/*.js"
+    ],
+    "matches": [
+        "<all_urls>"
+    ]
+}
+],
+"commands": {
+"_execute_action": {
+    "suggested_key": {
+        "default": "Ctrl+Shift+L",
+        "mac": "Command+Shift+L"
+    }
+}
+}
 }
